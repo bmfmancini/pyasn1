@@ -10,6 +10,8 @@ from pyasn1.type.error import ValueConstraintError
 
 
 def main():
+    """Demonstrate value-range, size, single-value, and alphabet constraints."""
+
     # --- ValueRangeConstraint on INTEGER ---
     class Age(univ.Integer):
         subtypeSpec = constraint.ValueRangeConstraint(0, 150)

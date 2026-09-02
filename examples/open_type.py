@@ -11,12 +11,14 @@ from pyasn1.type import namedtype, opentype, univ
 
 
 class Choice(univ.Sequence):
-    """ASN.1:
+    """A SEQUENCE whose ``blob`` type is selected by the ``id`` field.
 
-    Choice ::= SEQUENCE {
-        id    INTEGER,
-        blob  ANY DEFINED BY id
-    }
+    ASN.1::
+
+        Choice ::= SEQUENCE {
+            id    INTEGER,
+            blob  ANY DEFINED BY id
+        }
     """
 
     componentType = namedtype.NamedTypes(
@@ -36,6 +38,7 @@ class Choice(univ.Sequence):
 
 
 def main():
+    """Round-trip an open-typed value through DER for two ``id`` selectors."""
     # --- case 1: id=1 means blob is an INTEGER ---
     choice1 = Choice()
     choice1["id"] = 1

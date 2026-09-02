@@ -12,12 +12,14 @@ from pyasn1.type import namedtype, univ
 
 
 class LinkedList(univ.Sequence):
-    """ASN.1:
+    """A self-referencing linked list of integers.
 
-    LinkedList ::= SEQUENCE {
-        value    INTEGER,
-        next     LinkedList OPTIONAL
-    }
+    ASN.1::
+
+        LinkedList ::= SEQUENCE {
+            value    INTEGER,
+            next     LinkedList OPTIONAL
+        }
     """
 
     # The componentType is assigned after class definition to allow
@@ -31,6 +33,7 @@ LinkedList.componentType = namedtype.NamedTypes(
 
 
 def main():
+    """Build a three-node list and round-trip it through DER."""
     # Build: 1 -> 2 -> 3
     lst = LinkedList()
     lst["value"] = 1

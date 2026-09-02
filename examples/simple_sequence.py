@@ -14,7 +14,10 @@ from pyasn1.type import char, namedtype, univ
 
 
 class User(univ.Sequence):
-    """ASN.1: User ::= SEQUENCE { id INTEGER, name UTF8String }"""
+    """A user record with an integer ``id`` and UTF-8 ``name``.
+
+    ASN.1: ``User ::= SEQUENCE { id INTEGER, name UTF8String }``
+    """
 
     componentType = namedtype.NamedTypes(
         namedtype.NamedType("id", univ.Integer()),
@@ -23,6 +26,7 @@ class User(univ.Sequence):
 
 
 def main():
+    """Populate a ``User``, encode it to DER, and decode it back."""
     # --- populate ---
     user = User()
     user["id"] = 42

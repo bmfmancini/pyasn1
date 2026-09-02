@@ -17,7 +17,10 @@ from pyasn1.type import namedtype, univ
 
 
 class Point(univ.Sequence):
-    """ASN.1: Point ::= SEQUENCE { x INTEGER, y INTEGER }"""
+    """A 2D point with integer ``x`` and ``y`` coordinates.
+
+    ASN.1: ``Point ::= SEQUENCE { x INTEGER, y INTEGER }``
+    """
 
     componentType = namedtype.NamedTypes(
         namedtype.NamedType("x", univ.Integer()),
@@ -26,6 +29,7 @@ class Point(univ.Sequence):
 
 
 def main():
+    """Round-trip a ``Point`` through the BER, CER, DER, and native codecs."""
     point = Point()
     point["x"] = 10
     point["y"] = -20
