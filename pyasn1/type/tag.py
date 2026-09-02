@@ -4,6 +4,8 @@
 # Copyright (c) 2005-2019, Ilya Etingof <etingof@gmail.com>
 # License: http://snmplabs.com/pyasn1/license.html
 #
+"""ASN.1 tag and tag-set classes used to distinguish types."""
+
 from collections import namedtuple
 from typing import Any, Final
 
@@ -73,7 +75,7 @@ _TagBase = namedtuple("_TagBase", ["tagClass", "tagFormat", "tagId"])
 
 
 class Tag(_TagBase):
-    """Create ASN.1 tag
+    """Create ASN.1 tag.
 
     Represents ASN.1 tag that can be attached to a ASN.1 type to make
     types distinguishable from each other.
@@ -96,6 +98,7 @@ class Tag(_TagBase):
     __slots__ = ()
 
     def __new__(cls, tagClass: int, tagFormat: int, tagId: int) -> "Tag":
+        """Construct a *Tag*, rejecting a negative *tagId*."""
         if tagId < 0:
             raise error.PyAsn1Error("Negative tag ID (%s) not allowed" % tagId)
         return super().__new__(cls, tagClass, tagFormat, tagId)
@@ -134,7 +137,7 @@ class Tag(_TagBase):
 
 
 class TagSet:
-    """Create a collection of ASN.1 tags
+    """Create a collection of ASN.1 tags.
 
     Represents a combination of :class:`~pyasn1.type.tag.Tag` objects
     that can be attached to a ASN.1 type to make types distinguishable
@@ -229,7 +232,7 @@ class TagSet:
 
     @property
     def baseTag(self) -> Any:
-        """Return base ASN.1 tag
+        """Return base ASN.1 tag.
 
         Returns
         -------
@@ -240,7 +243,7 @@ class TagSet:
 
     @property
     def superTags(self) -> tuple[Tag, ...]:
-        """Return ASN.1 tags
+        """Return ASN.1 tags.
 
         Returns
         -------
@@ -250,7 +253,7 @@ class TagSet:
         return self.__superTags
 
     def tagExplicitly(self, superTag: Tag) -> "TagSet":
-        """Return explicitly tagged *TagSet*
+        """Return explicitly tagged *TagSet*.
 
         Create a new *TagSet* representing callee *TagSet* explicitly tagged
         with passed tag(s). With explicit tagging mode, new tags are appended
@@ -273,7 +276,7 @@ class TagSet:
         return self + superTag
 
     def tagImplicitly(self, superTag: Tag) -> "TagSet":
-        """Return implicitly tagged *TagSet*
+        """Return implicitly tagged *TagSet*.
 
         Create a new *TagSet* representing callee *TagSet* implicitly tagged
         with passed tag(s). With implicit tagging mode, new tag(s) replace the
@@ -296,7 +299,7 @@ class TagSet:
         return self[:-1] + superTag
 
     def isSuperTagSetOf(self, tagSet: "TagSet") -> bool:
-        """Test type relationship against given *TagSet*
+        """Test type relationship against given *TagSet*.
 
         The callee is considered to be a supertype of given *TagSet*
         tag-wise if all tags in *TagSet* are present in the callee and
